@@ -1,0 +1,22 @@
+.main-header {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #7eaed4;
+
+    .left-header {
+        
+        display: flex;
+        flex-direction: row;
+        justify-content: unset;
+        align-items: center;
+
+        .button-header:hover {
+
+            background-color: #cce1e9;
+            text-align: center;
+            text-decoration: none;
+        }
+    }
+}

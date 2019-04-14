@@ -1,0 +1,28 @@
+<div class="main-header">
+
+  <div class="left-header">
+
+    <button *ngFor="let botao of colecaoBotaoes" class="button-header" (click)="handleRoute(botao.link)">{{ botao.nome }}</button>
+  </div>
+  <div class="center-header">
+
+    <img [src]="logo" (click)="handleRoute(Home)">
+  </div>
+  <div class="right-header">
+
+    <div class="userContent">
+
+      <img class="userPreview" [src]="avatar" (click)="openSubMenu()">
+    </div>
+    <div *ngIf="menuCondition" class="subMenu">
+
+      <form>
+
+        <input #email type="email" class="campoForm"/>
+        <input #password type="password" class="campoForm">
+        <input type="button" class="submitForm" (click)="logaSistema(email, password)"/> 
+      </form>
+      <a class="forgetPasswd" (click)="handleRoute('forgetPasswd')">Esqueceu sua senha?</a>
+    </div>
+  </div>
+</div>
