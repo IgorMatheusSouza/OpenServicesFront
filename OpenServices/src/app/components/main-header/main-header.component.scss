@@ -3,20 +3,59 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: #7eaed4;
+    background-color: steelblue;
+
+    .logo-center {
+
+        width:80px;
+        height: 50px;
+    }
 
     .left-header {
         
         display: flex;
         flex-direction: row;
-        justify-content: unset;
+
+        .button-header {
+
+            box-shadow: black;
+            border: none;
+            color: white;
+            background-color: steelblue;
+            cursor: pointer;
+        
+            &:hover {
+
+                background-color: #7eaed4;
+                text-align: center;
+                text-decoration: none;
+            }
+        
+        }
+
+    }
+    .right-header {
+
+        display: flex;
+        flex-direction: row;
         align-items: center;
 
-        .button-header:hover {
+        
+        .userContent {  
+            
+            cursor: pointer;
 
-            background-color: #cce1e9;
-            text-align: center;
-            text-decoration: none;
+            .userPreview {
+        
+                width: 60px;
+                height: 45px;
+                border-radius: 36px;
+            }
+            span {
+
+                font-size: 16px;
+                color: white;
+            }
         }
     }
 }

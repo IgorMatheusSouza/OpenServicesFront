@@ -5,21 +5,15 @@ export class MainHeaderService {
 
     constructor() {}
 
-    public retrieveAvatar(): string {
+    public retrieveAvatar(): any {
 
-        let retorno;
-        if (true) { //se tem no banco
+        const palavra = '';
+        let retorno = '../../../assets/icons/avatar.png';
+        if (!palavra) { //se tem no banco
 
             //retorno recebe imagem do banco
-        } else {
-
-            retorno = '../../../assets/images/avatar.svg';
         }
-        return retorno;
+        return {name: null, imagem: retorno};
     }
 
-    public logaSistema(email, password) {
-
-        //autentica usuário
-    }
 }

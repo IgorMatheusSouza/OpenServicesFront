@@ -1,25 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+
 import { MainHeaderService } from './service/main-header.service';
+import { LoginComponent } from 'src/app/modules/login/login.component';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'main-header',
+  selector: 'app-main-header',
   templateUrl: './main-header.component.html',
-  styleUrls: ['./main-header.component.scss']
+  styleUrls: ['./main-header.component.scss'],
+  providers: [MainHeaderService]
 })
-export class MainHeaderComponent implements OnInit {
+export class MainHeaderComponent implements OnInit, OnDestroy {
 
+  public formGroupDados: FormGroup;
   public colecaoBotoes: any[];
-  public logo = '../../assets/icons/logo_princ.png';
+  public logo = '../../assets/icons/logo.jpeg';
   public avatar: string;
-  public menuCondition = false;
+  public userName: string;
+  public forgetPasswd = true;
+  public menuValidator = false;
+  private loginSubscription: Subscription;
 
-  constructor(private route: Router, private headerService: MainHeaderService) { }
+  constructor(private route: Router, private headerService: MainHeaderService, private dialog: MatDialog) { }
 
   ngOnInit() {
 
     this.colecaoBotoes = this.retornaBotoes();
-    this.avatar = this.retrieveImage();
+    this.retrieveImage();
+    console.log(this.colecaoBotoes);
   }
 
   public handleRoute(rota) {
@@ -29,12 +40,15 @@ export class MainHeaderComponent implements OnInit {
 
   public openSubMenu() {
 
-    this.menuCondition = !this.menuCondition;
-  }
+    if (this.menuValidator) {
 
-  public logaSistema(email, password) {
-
-    this.headerService.logaSistema(email, password);
+      this.forgetPasswd = true;
+      this.dialog.closeAll();
+      this.menuValidator = false;
+      return;
+    }
+    this.menuValidator = true;
+    this.loginSubscription = this.dialog.open(LoginComponent, {disableClose: true}).afterClosed().subscribe();
   }
 
   private retornaBotoes() {
@@ -42,11 +56,17 @@ export class MainHeaderComponent implements OnInit {
     return [ {nome: 'Home', link: ''}, {nome: 'Sobre', link: 'saibaMais'}, {nome: 'Primeiros Passos', link: 'faq'} ];
   }
 
-  private retrieveImage(): string {
+  private retrieveImage() {
 
-    const imagem = this.headerService.retrieveAvatar();
+    const user = this.headerService.retrieveAvatar();
 
-    return imagem;
+    this.avatar = user.imagem;
+    this.userName = user.name;
+  }
+
+  ngOnDestroy() {
+
+    this.loginSubscription.unsubscribe();
   }
 
 }
